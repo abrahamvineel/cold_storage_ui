@@ -2,6 +2,7 @@ import logo from './cold_storage.png';
 import './App.css';
 import Login from './components/Login';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import Signup from './components/Signup';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
