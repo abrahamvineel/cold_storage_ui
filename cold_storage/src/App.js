@@ -3,6 +3,7 @@ import './App.css';
 import Login from './components/Login';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Signup from './components/Signup';
+import HomePage from './components/HomePage';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -29,7 +30,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<Signup />}/>
+        <Route path="/homepage" element={<HomePage />}/>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
