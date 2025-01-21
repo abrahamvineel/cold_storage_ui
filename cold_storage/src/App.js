@@ -5,7 +5,7 @@ import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Signup from './components/Signup';
 import HomePage from './components/HomePage';
 
-const HomePage = () => {
+const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -28,7 +28,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />}/>
         <Route path="/homepage" element={<HomePage />}/>

@@ -5,12 +5,12 @@ const HomePage = () => {
     return (
         <div>
             <h1>Welcome abc</h1>
-            <div>
-          <button >Filter</button>
-          <button >Sort</button>
-          <button >Download</button>
-          <button >Download</button>
-        </div>
+            <div class="button-container">
+                <button >Filter</button>
+                <button >Sort</button>
+                <button >Upload</button>
+                <button >Download</button>
+            </div>
         </div>
     );
 };
