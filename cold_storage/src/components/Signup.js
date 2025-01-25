@@ -1,20 +1,34 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const Signup = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const [formData, setFormData] = useState({ email: "", password: "", confirmPassword:"" });
+
+    const handleFormData = (e) => {
+        setFormData({...formData, [e.target.name]: e.target.value})
+    }
 
     const navigate = useNavigate();
 
-    const handleSignup = (e) => {
+    const handleSignup = async (e) => {       
         e.preventDefault();
-        if (password !== confirmPassword) {
+        if (formData.password !== formData.confirmPassword) {
             alert("Passwords do not match");
             return;
         }
-        navigate("/login")
+    
+        try {
+            const response = await axios.post("http://localhost:9193/user", {
+                email: formData.email,
+                password: formData.password,
+            });
+            console.log("Response:", response.data);
+            navigate("/login");
+        } catch (error) {
+            console.error("Error during signup:", error.response?.data || error.message);
+        }
     };
 
     return (
@@ -23,22 +37,26 @@ const Signup = () => {
             <form onSubmit={handleSignup}>
                 <div>
                     <label>Email:</label>
-                    <input type="email" value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    <input type="email"
+                    name="email" 
+                    value={formData.email} 
+                    onChange={handleFormData}
                     required />
                 </div>
                 <div>
                     <label>Password: </label>
                     <input type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)} />
+                                name="password" 
+                                value={formData.password} 
+                    onChange={handleFormData} />
                 </div>
                 <div>
                     <label>Confirm Password: </label>
                     <input 
                         type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        name="confirmPassword" 
+                        value={formData.confirmPassword} 
+                        onChange={handleFormData}
                     />
                 </div>
                 <button type="submit">Sign Up</button>
