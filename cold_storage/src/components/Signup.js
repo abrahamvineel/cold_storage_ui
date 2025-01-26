@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import bcrypt from "bcryptjs";
 
-
 const Signup = () => {
 
     const [formData, setFormData] = useState({ email: "", password: "", confirmPassword:"" });
@@ -51,8 +50,8 @@ const Signup = () => {
                 <div>
                     <label>Password: </label>
                     <input type="password"
-                                name="password" 
-                                value={formData.password} 
+                    name="password" 
+                    value={formData.password} 
                     onChange={handleFormData} />
                 </div>
                 <div>
