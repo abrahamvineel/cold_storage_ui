@@ -5,7 +5,7 @@ const HomePage = () => {
     return (
         <div>
             <h1>Welcome abc</h1>
-            <div class="button-container">
+            <div className="button-container">
                 <button >Filter</button>
                 <button >Sort</button>
                 <button >Upload</button>

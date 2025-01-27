@@ -41,6 +41,7 @@ const Login = () => {
             <label>Email:</label>
             <input
               type="email"
+              name="email" 
               value={formData.email} 
               onChange={handleFormData}
               required
@@ -52,6 +53,7 @@ const Login = () => {
               type="password"
               name="password" 
               value={formData.password} 
+              onChange={handleFormData}
               required
             />
           </div>
