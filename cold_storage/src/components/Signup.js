@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import bcrypt from "bcryptjs";
 
 const Signup = () => {
 
@@ -19,14 +18,11 @@ const Signup = () => {
             alert("Passwords do not match");
             return;
         }
-        
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(formData.password, salt);
     
         try {
-            const response = await axios.post("http://localhost:9193/user", {
+            const response = await axios.post("https://localhost:9193/user", {
                 email: formData.email,
-                password: hashedPassword,
+                password: formData.password,
             });
             console.log("Response:", response.data);
             navigate("/login");

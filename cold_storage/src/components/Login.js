@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import bcrypt from "bcryptjs";
 
 const Login = () => {
 
@@ -11,23 +10,23 @@ const Login = () => {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
-
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(formData.password, salt);
 
         try {
-          const response = await axios.post("http://localhost:9193/user/login", {
+          await axios.post("https://localhost:9193/user/login", {
               email: formData.email,
-              password: hashedPassword,
+              password: formData.password,
+          }).then(resp => {
+            console.log("Response:", resp);
+            if (resp.data) {
+              navigate("/homepage");
+            } else {
+              navigate("/login")
+            }
           });
-          console.log("Response:", response.data);
-          navigate("/homepage");
       } catch (error) {
           console.error("Error during signup:", error.response?.data || error.message);
       }
