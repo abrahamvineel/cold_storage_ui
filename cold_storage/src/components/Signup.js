@@ -20,7 +20,7 @@ const Signup = () => {
         }
     
         try {
-            const response = await axios.post("https://localhost:9193/user", {
+            const response = await axios.post("http://localhost:9193/user", {
                 email: formData.email,
                 password: formData.password,
             });
