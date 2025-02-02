@@ -21,6 +21,11 @@ const Login = () => {
               password: formData.password,
           }).then(resp => {
             console.log("Response:", resp);
+            const token = resp.data.token;
+
+            if (token) {
+                localStorage.setItem("jwt", token);
+            }
             if (resp.data) {
               navigate("/homepage");
             } else {
