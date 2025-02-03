@@ -22,7 +22,7 @@ const Login = () => {
           }).then(resp => {
             console.log("Response:", resp);
             const token = resp.data.token;
-
+            localStorage.setItem("email",  JSON.stringify({email : formData.email}));
             if (token) {
                 localStorage.setItem("jwt", token);
             }
