@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const HomePage = () => {
     const navigate = useNavigate();
     const [storedEmail, setUser] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
 
     useEffect(() => {
         const storedEmail = localStorage.getItem("email");
@@ -21,16 +22,22 @@ const HomePage = () => {
         navigate("/login"); 
     };
 
+    const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
+
+    const handleUpload = async () => {
+    }
+
     return (
         <div>
             <h1>Welcome {storedEmail?.email || "User"}</h1> <button onClick={logout}>Logout</button>
-
             <div className="button-container">
-                <button >Upload</button>
-                <button >Download</button>
-
+                <input type="file" onChange={handleFileChange} />
+                <button onClick={handleUpload}>Upload</button>
+            </div>                
+            <button >Download</button>
             </div>
-        </div>
     );
 };
 
