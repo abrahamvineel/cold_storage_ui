@@ -53,14 +53,12 @@ label {
 }
 
 input {
-  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
 button {
-  width: 100%;
   padding: 10px;
   background: #007bff;
   color: #fff;
@@ -73,22 +71,28 @@ button:hover {
   background: #0056b3;
 }
 
-    /* Style for the button container */
-.button-container {
+.file-container {
       display: flex;
-      gap: 10px; /* Add space between buttons */
-      justify-content: center; /* Center align the buttons */
-      margin-top: 20px; /* Add some top spacing */
+      justify-content: left; 
 }
 
-    /* Style for individual buttons */
-.button-container button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
+.file-container input {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.file-container button {
+  padding: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin: 15px;
+}
+
+.file-table td {
+  padding-left: 20px;
 }
