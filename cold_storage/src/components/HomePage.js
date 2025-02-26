@@ -12,7 +12,6 @@ const HomePage = () => {
 
     useEffect(() => {
         const storedEmail = localStorage.getItem("email");
-        console.log("storedEmail" , storedEmail)
         if (storedEmail) {
             const parsedEmail = JSON.parse(storedEmail);
             setUser(parsedEmail.email);
@@ -23,9 +22,18 @@ const HomePage = () => {
     }, [navigate]);
 
     const fetchFiles = async (email) => {
+        const token = localStorage.getItem("jwt"); 
+        console.log('token ', token);
         try {
-            const response = await fetch(`http://localhost:9194/files?email=${encodeURIComponent(email)}`)
-            if (!response.ok) {
+            const response = await fetch(`http://localhost:8081/files?email=${encodeURIComponent(email)}`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                }
+            })
+            if (response.status === 401) {  
+                logout();  
+                throw new Error("Unauthorized: Invalid session");
+            } else if (!response.ok) {
                 throw new Error("Failed to fetch files");
             }
             const data = await response.json();
@@ -70,7 +78,7 @@ const HomePage = () => {
         formData.append("file", selectedFile);
         const storedEmail = localStorage.getItem("email");
         const parsedEmail = JSON.parse(storedEmail);
-
+        const token = localStorage.getItem("jwt"); 
         const metadata = {
             userEmail: parsedEmail.email,
             fileSizeInBytes: selectedFile.size,
@@ -80,13 +88,21 @@ const HomePage = () => {
         formData.append('metadata', JSON.stringify(metadata));
 
         try {
-            const response = await axios.post("http://localhost:9194/files/upload",
+            const response = await axios.post("http://localhost:8081/files/upload",
                 formData, {
                     headers: {
+                        "Authorization": `Bearer ${token}`,
                         "Content-Type": "multipart/form-data",
                     }
                 }
             )
+            if (response.status === 401) {  
+                logout();  
+                throw new Error("Unauthorized: Invalid session");
+            }
+            else if (!response.ok) {
+                throw new Error("Failed to fetch files");
+            }
             alert("file uploaded successfully");
             setSelectedFile(null);
             fetchFiles(parsedEmail.email); 
@@ -96,11 +112,21 @@ const HomePage = () => {
     }
 
     const handleDownload = async (fileName) => {
+        const token = localStorage.getItem("jwt"); 
+        const storedEmail = JSON.parse(localStorage.getItem("email"));
+
         try {
-            const response = await axios.get(`http://localhost:9194/files/download?fileName=${encodeURIComponent(fileName)}`);
+            const response = await axios.get(`http://localhost:8081/files/download?fileName=${encodeURIComponent(fileName)}&email=${encodeURIComponent(storedEmail.email)}`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                }
+            });
             if (response.status == 200) {
                 const downloadUrl = response.data;
                 window.open(downloadUrl, "_blank")
+            } else if (response.status === 401) {  
+                logout();  
+                throw new Error("Unauthorized: Invalid session");
             } else {
                 alert("failed ")
             }
@@ -112,7 +138,7 @@ const HomePage = () => {
     return (
         <div>
             <div class="header">
-                <h1>Welcome {storedEmail?.email || "User"}</h1>
+                <h1>Welcome { JSON.parse(localStorage.getItem("email")).email || "User"}</h1>
                 <button onClick={logout} >Logout</button>
             </div>
             <div className="file-container">
